@@ -3,13 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "clean:reports": "rm -rf allure-report allure-results && mkdir -p allure-report allure-results",
+    "generate:reports": "npx allure generate ./allure-report --clean",
+    "open:reports": "npx allure open ./allure-report",
+    "pretest": "npm run clean:reports",
+    "posttest": "npm run generate:reports && npm run open:reports",
+    "execute:script": "npx playwright test tests/pageObjectModelTestFixture.spec.ts",
+    "test": "npm run execute:script || npm rin posttest"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.45.3",
     "@types/node": "^20.14.12",
+    "allure-commandline": "^2.29.0",
+    "allure-playwright": "^3.0.0-beta.7",
+    "mkdirp": "^3.0.1",
+    "rimraf": "^6.0.1",
     "typescript": "^5.5.4"
   }
 }
